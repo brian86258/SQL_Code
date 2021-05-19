@@ -1,0 +1,247 @@
+
+<!-- saved from url=(0052)https://www.1keydata.com/tw/sql/sql-foreign-key.html -->
+<html lang="zh-tw"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SQL 外來鍵 - 1Keydata SQL 語法教學</title>
+
+<meta name="description" content="這一頁介紹外來鍵的概念。">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link rel="canonical" href="https://www.1keydata.com/tw/sql/sql-foreign-key.html">
+<link rel="stylesheet" type="text/css" href="./SQL 外來鍵 - 1Keydata SQL 語法教學_files/sql.css">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.1keydata.com/icon-76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.1keydata.com/icon-120.png">
+<link rel="apple-touch-icon" href="https://www.1keydata.com/icon-256.png">
+<script async="" src="./SQL 外來鍵 - 1Keydata SQL 語法教學_files/analytics.js.下載"></script><script src="./SQL 外來鍵 - 1Keydata SQL 語法教學_files/scroll.js.下載"></script>
+<script async="" src="./SQL 外來鍵 - 1Keydata SQL 語法教學_files/f.txt"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-4254904157393454",
+    enable_page_level_ads: true
+  });
+</script></head>
+
+<body data-gr-c-s-loaded="true">
+<center><table border="0" class="main-top" cellspacing="0" cellpadding="0"><tbody><tr><td>
+</td><td><h1>SQL 外來鍵</h1>
+﻿</td></tr><tr>
+<td colspan="2">
+
+<div class="n-wrap">
+<div class="n1"><a href="https://www.1keydata.com/tw/sql/sql.html">首頁</a></div>
+<div class="n2"><a href="https://www.1keydata.com/tw/sql/sqlselect.html">SQL指令</a></div>
+<div class="n3h"><a href="https://www.1keydata.com/tw/sql/sqlcreate.html">表格處理</a></div>
+<div class="n4"><a href="https://www.1keydata.com/tw/sql/advanced.html">進階SQL</a></div>
+<div class="n5"><a href="https://www.1keydata.com/tw/sql/sql-syntax.html">SQL語法</a></div>
+</div>
+</td></tr></tbody></table>
+<div id="colwrap">
+<div id="col2">
+<div id="col2n">
+
+﻿<br><center>
+<!-- TW SQL Responsive -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4254904157393454" data-ad-slot="2651968023" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center><table border="0" cellspacing="5" class="main-content"><tbody><tr><td>
+﻿<p>外來鍵是一個(或數個)指向另外一個表格主鍵的欄位。外來鍵的目的是確定資料的參考完整性 (Referential Integrity)。換言之，只有被准許的資料值才會被存入資料庫內。
+
+</p><p>舉例來說，假設我們有兩個表格：一個 <b><i>CUSTOMER</i></b> 表格，裡面記錄了所有顧客的資料；另一個 <b><i>ORDERS</i></b> 表格，裡面記錄了所有顧客訂購的資料。在這裡的一個限制，就是所有的訂購資料中的顧客，都一定是要跟在 <b><i>CUSTOMER</i></b> 表格中存在。在這裡，我們就會在 <b><i>ORDERS</i></b> 表格中設定一個外來鍵，而這個外來鍵是指向 <b><i>CUSTOMER</i></b> 表格中的主鍵。這樣一來，我們就可以確定所有在 <b><i>ORDERS</i></b> 表格中的顧客都存在 <b><i>CUSTOMER</i></b> 表格中。換句話說，<b><i>ORDERS</i></b> 表格之中，不能有任何顧客是不存在於 <b><i>CUSTOMER</i></b> 表格中的資料。
+		  
+</p><p>這兩個表格的結構將會是如下：
+
+		  </p><p><font size="2">CUSTOMER 表格</font>
+		  <table class="content" border="1">
+                  <tbody><tr>
+                    <td>欄位名</td>
+                    <td>性質</td>
+                  </tr>
+                  <tr>
+                    <td>SID</td>
+                    <td>主鍵</td>
+                  </tr>
+                  <tr>
+                    <td>Last_Name</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>First_Name</td>
+                    <td></td>
+                  </tr>
+                </tbody></table>
+
+		  </p><p><font size="2">ORDERS 表格</font>
+		  <table class="content" border="1">
+                  <tbody><tr>
+                    <td>欄位名</td>
+                    <td>性質</td>
+                  </tr>
+                  <tr>
+                    <td>Order_ID</td>
+                    <td>主鍵</td>
+                  </tr>
+                  <tr>
+                    <td>Order_Date</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Customer_SID</td>
+                    <td>外來鍵</td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td></td>
+                  </tr>	  
+                </tbody></table>
+
+</p><p>在以上的例子中，<b><i>ORDERS</i></b> 表格中的 Customer_SID 欄位是一個指向 <b><i>CUSTOMER</i></b> 表格中 SID 欄位的外來鍵。
+
+</p><p>以下列出幾個在建置 <b><i>ORDERS</i></b> 表格時指定外來鍵的方式：
+
+		  </p><p><b>MySQL</b>:  
+		  </p><p></p><div class="box"><font color="blue"><b>CREATE TABLE ORDERS
+		  <br>(Order_ID integer,
+		  <br>Order_Date date,
+		  <br>Customer_SID integer,
+		  <br>Amount double,
+		  <br>PRIMARY KEY (Order_ID),
+		  <br>FOREIGN KEY (Customer_SID) REFERENCES CUSTOMER (SID));</b></font></div>
+
+		  <p><b>Oracle</b>:  
+		  </p><p></p><div class="box"><font color="blue"><b>CREATE TABLE ORDERS
+		  <br>(Order_ID integer PRIMARY KEY,
+		  <br>Order_Date date,
+		  <br>Customer_SID integer REFERENCES CUSTOMER (SID),
+		  <br>Amount double);</b></font></div>
+
+		  <p><b>SQL Server</b>: 
+		  </p><p></p><div class="box"><font color="blue"><b>CREATE TABLE ORDERS
+		  <br>(Order_ID integer PRIMARY KEY,
+		  <br>Order_Date datetime,
+		  <br>Customer_SID integer REFERENCES CUSTOMER (SID),
+		  <br>Amount double);</b></font></div>
+
+<p>以下的例子則是藉著改變表格架構來指定外來鍵。這裡假設 <b><i>ORDERS</i></b> 表格已經被建置，而外來鍵尚未被指定：
+		  
+		  </p><p><b>MySQL</b>: 
+		  </p><p></p><div class="box"><font color="blue"><b>ALTER TABLE ORDERS 
+		  <br>ADD FOREIGN KEY (Customer_SID) REFERENCES CUSTOMER (SID);</b></font></div>
+
+		  <p><b>Oracle</b>: 
+		  </p><p></p><div class="box"><font color="blue"><b>ALTER TABLE ORDERS 
+		  <br>ADD (CONSTRAINT fk_orders1) FOREIGN KEY (Customer_SID) REFERENCES CUSTOMER (SID);</b></font></div>
+
+		  <p><b>SQL Server</b>: 
+		  </p><p></p><div class="box"><font color="blue"><b>ALTER TABLE ORDERS 
+		  <br>ADD FOREIGN KEY (Customer_SID) REFERENCES CUSTOMER (SID);</b></font></div>
+
+<br>
+<center>
+<b>下一頁：<a href="https://www.1keydata.com/tw/sql/sql-create-view.html">SQL CREATE VIEW</a></b>
+</center>
+<br><center>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4254904157393454" data-ad-slot="2651968023" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</center><br>
+
+<hr>
+<center>Copyright © 2020 &nbsp; <a href="https://www.1keydata.com/">1keydata.com</a> &nbsp; 版權所有</center><br>
+</td></tr></tbody></table>
+
+
+
+
+
+</div></div></div></center>
+
+
+
+<div id="col1">
+<div id="left-nav" class="mousescroll">
+<ul>
+<br><br>
+<li><a href="https://www.1keydata.com/tw/sql/sqlselect.html">SQL SELECT</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqldistinct.html">SQL DISTINCT</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlwhere.html">SQL WHERE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlandor.html">SQL AND OR</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlin.html">SQL IN</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlbetween.html">SQL BETWEEN</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-wildcard.html">SQL 萬用字元</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqllike.html">SQL LIKE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlorderby.html">SQL ORDER BY</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlfunctions.html">SQL 函數</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-average.html">SQL 平均值</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlcount.html">SQL COUNT</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-max.html">SQL 最大值</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-min.html">SQL 最小值</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-sum.html">SQL 總合</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlgroupby.html">SQL GROUP BY</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlhaving.html">SQL HAVING</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlalias.html">SQL 別名</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-as.html">SQL AS</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqljoins.html">SQL 表格連接</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlouterjoin.html">SQL 外部連接</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-concatenate.html">SQL CONCATENATE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-substring.html">SQL SUBSTRING</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-trim.html">SQL TRIM</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-length.html">SQL 長度</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-replace.html">SQL REPLACE</a></li>
+<li> &nbsp; </li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlcreate.html">SQL CREATE TABLE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-constraint.html">SQL Constraint</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-primary-key.html">SQL 主鍵</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-foreign-key.html">SQL 外來鍵</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-create-view.html">SQL CREATE VIEW</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-create-index.html">SQL CREATE INDEX</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-alter-table.html">SQL ALTER TABLE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqldrop.html">SQL DROP TABLE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqltruncate.html">SQL TRUNCATE TABLE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlinsert.html">SQL INSERT INTO</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlupdate.html">SQL UPDATE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqldelete.html">SQL DELETE FROM</a></li>
+<li> &nbsp; </li>
+<li><a href="https://www.1keydata.com/tw/sql/advanced.html">進階SQL</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlunion.html">SQL UNION</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sqlunionall.html">SQL UNION ALL</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-intersect.html">SQL INTERSECT</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-minus.html">SQL MINUS</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-subquery.html">SQL 子查詢</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-exists.html">SQL EXISTS</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-case.html">SQL CASE</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-rank.html">SQL 算排名</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-median.html">SQL 算中位數</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-running-totals.html">SQL 算累積總計</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-percent-to-total.html">SQL 算總合百分比</a></li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-cumulative-percent-to-total.html">SQL 算累積總合百分比</a></li>
+<li> &nbsp; </li>
+<li><a href="https://www.1keydata.com/tw/sql/sql-sitemap.html">網站導引</a></li>
+<li> &nbsp; </li>
+<li><a href="https://www.1keydata.com/tw/sql/sqllinks.html">其他資源</a></li>
+<br><br><br><br><br><br>
+</ul></div>
+
+<div id="custom-search">
+<!-- Google CSE Search Box Begins -->
+<form id="searchbox_014264424332737199420:q0i0hgtcrj0" action="https://www.1keydata.com/tw/sql/result.html">
+  <input type="hidden" name="cx" value="014264424332737199420:q0i0hgtcrj0">
+  <input name="q" type="text" size="27" placeholder="Custom Search" style="border: 1px solid rgb(126, 157, 185); padding: 2px; background: url(&quot;https://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) left center no-repeat rgb(255, 255, 255); text-indent: 48px;">
+  <input type="submit" style="font-family: arial; font-size:12px" name="sa" value="搜尋本站">
+  <input type="hidden" name="cof" value="FORID:10">
+<input name="siteurl" type="hidden" value="www.1keydata.com/tw/sql/sql-foreign-key.html"><input name="ref" type="hidden" value="www.1keydata.com/tw/sql/sql-primary-key.html"><input name="ss" type="hidden" value=""></form>
+<script type="text/javascript" src="./SQL 外來鍵 - 1Keydata SQL 語法教學_files/f(1).txt"></script>
+<!-- Google CSE Search Box Ends -->
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-476266-1', '1keydata.com');
+  ga('send', 'pageview');
+
+</script>
+ </div></body></html>
